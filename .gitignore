@@ -1,0 +1,39 @@
+# Binários compilados
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+todo-cli
+
+# Arquivos de teste
+*.test
+
+# Output de coverage
+*.out
+
+# Dependency directories
+vendor/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Arquivos temporários
+*.tmp
+*.temp
+
+#Projeto
+CLAUDE.md
+todo_cli_roadmap.md
