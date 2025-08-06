@@ -14,11 +14,16 @@ func displayMenu() {
 	fmt.Println("=======================================")
 	fmt.Println("\n📋 Menu Principal:")
 	fmt.Println("1. 📝 Listar todas as tarefas")
-	fmt.Println("2. ➕ Adicionar nova tarefa")
-	fmt.Println("3. ✅ Marcar tarefa como concluída/pendente")
-	fmt.Println("4. 🗑️  Remover tarefa")
-	fmt.Println("5. 💾 Salvar dados")
-	fmt.Println("6. 📁 Carregar dados")
+	fmt.Println("2. ✅ Listar tarefas concluídas")
+	fmt.Println("3. ❌ Listar tarefas pendentes")
+	fmt.Println("4. 🔍 Buscar tarefas")
+	fmt.Println("5. 📊 Ver estatísticas")
+	fmt.Println("6. ➕ Adicionar nova tarefa")
+	fmt.Println("7. ✏️  Editar tarefa")
+	fmt.Println("8. 🔄 Marcar tarefa como concluída/pendente")
+	fmt.Println("9. 🗑️  Remover tarefa")
+	fmt.Println("10. 💾 Salvar dados")
+	fmt.Println("11. 📁 Carregar dados")
 	fmt.Println("0. 🚪 Sair")
 	fmt.Print("\nDigite sua opção: ")
 }
@@ -58,11 +63,33 @@ func main() {
 
 		switch option {
 		case "1":
-			// Listar tarefas
+			// Listar todas as tarefas
 			fmt.Println("\n📝 === TODAS AS TAREFAS ===")
 			todoList.ListTasks()
 
 		case "2":
+			// Listar tarefas concluídas
+			fmt.Println("\n✅ === TAREFAS CONCLUÍDAS ===")
+			todoList.ListCompletedTasks()
+
+		case "3":
+			// Listar tarefas pendentes
+			fmt.Println("\n❌ === TAREFAS PENDENTES ===")
+			todoList.ListPendingTasks()
+
+		case "4":
+			// Buscar tarefas
+			fmt.Println("\n🔍 === BUSCAR TAREFAS ===")
+			fmt.Print("Digite o termo para buscar: ")
+			query := readInput()
+			todoList.SearchTasks(query)
+
+		case "5":
+			// Ver estatísticas
+			fmt.Println("\n📊 === ESTATÍSTICAS ===")
+			todoList.ShowStatistics()
+
+		case "6":
 			// Adicionar tarefa
 			fmt.Println("\n➕ === ADICIONAR NOVA TAREFA ===")
 			fmt.Print("📝 Digite o título da tarefa: ")
@@ -79,9 +106,30 @@ func main() {
 			task := todoList.AddTask(title, description)
 			fmt.Printf("✅ Tarefa [%d] criada com sucesso!\n", task.ID)
 
-		case "3":
+		case "7":
+			// Editar tarefa
+			fmt.Println("\n✏️ === EDITAR TAREFA ===")
+			todoList.ListTasks()
+
+			id, err := readInt("🔢 Digite o ID da tarefa para editar: ")
+			if err != nil {
+				fmt.Println("❌ ID inválido! Digite apenas números.")
+				break
+			}
+
+			fmt.Print("📝 Digite o novo título: ")
+			newTitle := readInput()
+			fmt.Print("📄 Digite a nova descrição (ou Enter para vazio): ")
+			newDescription := readInput()
+
+			err = todoList.EditTask(id, newTitle, newDescription)
+			if err != nil {
+				fmt.Println(err)
+			}
+
+		case "8":
 			// Toggle tarefa
-			fmt.Println("\n✅ === MARCAR TAREFA ===")
+			fmt.Println("\n🔄 === MARCAR TAREFA ===")
 			todoList.ListTasks()
 
 			id, err := readInt("🔢 Digite o ID da tarefa: ")
@@ -95,7 +143,7 @@ func main() {
 				fmt.Println(err)
 			}
 
-		case "4":
+		case "9":
 			// Remover tarefa
 			fmt.Println("\n🗑️ === REMOVER TAREFA ===")
 			todoList.ListTasks()
@@ -111,7 +159,7 @@ func main() {
 				fmt.Println(err)
 			}
 
-		case "5":
+		case "10":
 			// Salvar dados
 			fmt.Println("\n💾 === SALVAR DADOS ===")
 			err := todoList.SaveToFile(filename)
@@ -119,7 +167,7 @@ func main() {
 				fmt.Printf("❌ Erro ao salvar: %v\n", err)
 			}
 
-		case "6":
+		case "11":
 			// Carregar dados
 			fmt.Println("\n📁 === CARREGAR DADOS ===")
 			err := todoList.LoadFromFile(filename)
@@ -139,7 +187,7 @@ func main() {
 			return
 
 		default:
-			fmt.Printf("❌ Opção '%s' inválida! Digite um número de 0 a 6.\n", option)
+			fmt.Printf("❌ Opção '%s' inválida! Digite um número de 0 a 11.\n", option)
 		}
 
 		// Pausa para o usuário ler o resultado
