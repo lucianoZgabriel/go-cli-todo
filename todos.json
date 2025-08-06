@@ -1,0 +1,26 @@
+{
+ "tasks": [
+  {
+   "id": 1,
+   "title": "Estudar Go",
+   "description": "Aprender conceitos básicos da linguagem Go",
+   "completed": false,
+   "created_at": "2025-08-06T12:58:22.359632-04:00"
+  },
+  {
+   "id": 2,
+   "title": "Implementar CLI",
+   "description": "Criar interface de linha de comando",
+   "completed": true,
+   "created_at": "2025-08-06T12:58:22.359638-04:00"
+  },
+  {
+   "id": 3,
+   "title": "Escrever testes",
+   "description": "Criar testes unitários",
+   "completed": false,
+   "created_at": "2025-08-06T12:58:22.359639-04:00"
+  }
+ ],
+ "next_id": 4
+}

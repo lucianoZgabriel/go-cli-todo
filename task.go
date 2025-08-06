@@ -1,7 +1,9 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
+	"os"
 	"strings"
 	"time"
 )
@@ -96,4 +98,46 @@ func (tl *TodoList) RemoveTask(id int) error {
 		}
 	}
 	return fmt.Errorf("❌ Tarefa com ID %d não encontrada", id)
+}
+
+// SaveToFile salva a TodoList em um arquivo JSON
+func (tl *TodoList) SaveToFile(filename string) error {
+	// Converter struct para JSON
+	data, err := json.MarshalIndent(tl, "", " ")
+	if err != nil {
+		return fmt.Errorf("erro ao converter para JSON: %w", err)
+	}
+
+	//Escrever arquivo
+	err = os.WriteFile(filename, data, 0644)
+	if err != nil {
+		return fmt.Errorf("erro ao escrever arquivo '%s': %w", filename, err)
+	}
+
+	fmt.Printf("💾 TodoList salva em '%s' com sucesso!\n", filename)
+	return nil
+}
+
+// LoadFromFile carrega TodoList de um arquivo JSON
+func (tl *TodoList) LoadFromFile(filename string) error {
+	//Verificar se arquivo existe
+	if _, err := os.Stat(filename); os.IsNotExist(err) {
+		return fmt.Errorf("arquivo '%s' não encontrado", filename)
+	}
+
+	// Ler arquivo
+	data, err := os.ReadFile(filename)
+	if err != nil {
+		return fmt.Errorf("erro ao ler arquivo '%s': %w", filename, err)
+	}
+
+	// Converter JSON para struct
+	err = json.Unmarshal(data, tl)
+	if err != nil {
+		return fmt.Errorf("erro ao converter JSON: %w", err)
+	}
+
+	fmt.Printf("📁 TodoList carregada de '%s' com sucesso!\n", filename)
+	fmt.Printf("📊 %d tarefa(s) carregada(s)\n", len(tl.Tasks))
+	return nil
 }
